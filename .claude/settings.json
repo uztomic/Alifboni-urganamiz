@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter doctor *)",
+      "Bash(./avdmanager.bat create *)",
+      "Bash(export JAVA_HOME=\"C:\\\\Program Files\\\\Android\\\\Android Studio\\\\jbr\")",
+      "Bash(cd \"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\cmdline-tools\\\\latest\\\\bin\")",
+      "Bash(./avdmanager.bat list *)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\emulator\\\\emulator.exe\" -avd alifbo_test -no-snapshot -no-boot-anim)",
+      "Bash(echo \"emulator launched with pid $!\")",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" wait-for-device *)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" -s emulator-5554 install -r build\\\\app\\\\outputs\\\\flutter-apk\\\\app-debug.apk)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" -s emulator-5554 install -r \"build/app/outputs/flutter-apk/app-debug.apk\")",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" -s emulator-5554 shell monkey -p com.example.alifbo -c android.intent.category.LAUNCHER 1)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" -s emulator-5554 exec-out screencap -p)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" -s emulator-5554 shell input tap 292 908)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" devices *)",
+      "Bash(echo \"emulator relaunched pid $!\")",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" install *)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" shell *)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" exec-out *)",
+      "Bash('C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe' shell *)",
+      "Bash(\"C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe\" logcat *)",
+      "Bash('C:\\\\Users\\\\Lenovo\\\\AppData\\\\Local\\\\Android\\\\sdk\\\\platform-tools\\\\adb.exe' exec-out *)",
+      "Bash(flutter gen-l10n *)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(echo \"emulator relaunching pid $!\")",
+      "Bash(disown)",
+      "Bash(curl -sI --max-time 8 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Bamboo_forest.jpg/720px-Bamboo_forest.jpg')",
+      "Bash(curl -sI --max-time 8 'https://upload.wikimedia.org/wikipedia/commons/f/f3/Bamboo_forest.jpg')",
+      "Bash(flutter run *)",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('assets/logo/logo.png'\\); print\\(im.size, im.mode\\)\")",
+      "Bash(dart run *)",
+      "Bash(jobs)",
+      "Bash(./gradlew.bat --stop)"
+    ]
+  }
+}

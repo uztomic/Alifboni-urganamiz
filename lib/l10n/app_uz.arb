@@ -1,0 +1,102 @@
+{
+  "@@locale": "uz",
+  "appTitle": "Alifbo & Lug'at",
+  "@appTitle": {"description": "App name shown on splash/onboarding"},
+
+  "onboardingChooseLanguage": "Tilni tanlang",
+  "onboardingContinue": "Davom etish",
+
+  "homeAlphabetModule": "Alifbo",
+  "homeAlphabetModuleSubtitle": "Harflarni o'rganamiz",
+  "homeVocabularyModule": "Lug'at",
+  "homeVocabularyModuleSubtitle": "So'zlarni o'rganamiz",
+  "homeNatureModule": "Tabiat",
+  "homeNatureModuleSubtitle": "Hayvonlar va o'simliklar",
+  "homeStreakLabel": "{count} kunlik olov",
+  "@homeStreakLabel": {"placeholders": {"count": {"type": "int"}}},
+  "homeSettings": "Sozlamalar",
+
+  "alphabetSelectTitle": "Alifboni tanlang",
+  "alphabetProgress": "{learned}/{total} o'rganildi",
+  "@alphabetProgress": {"placeholders": {"learned": {"type": "int"}, "total": {"type": "int"}}},
+
+  "letterGridTitle": "Harflar",
+  "letterDetailListen": "Eshitish",
+  "letterDetailTrace": "Chizish",
+  "letterDetailView": "Ko'rish",
+  "letterDetailExampleWords": "Misol so'zlar",
+
+  "traceInstructions": "Barmog'ingiz bilan harfni chizing",
+  "traceSuccess": "Ajoyib!",
+  "traceTryAgain": "Yana urinib ko'ring",
+
+  "quizTitle": "Mini-viktorina",
+  "quizQuestionLetter": "Qaysi harf tovushi eshitildi?",
+  "quizCorrect": "To'g'ri!",
+  "quizIncorrect": "Noto'g'ri, yana urinib ko'ring",
+  "quizFinished": "Viktorina tugadi!",
+  "quizScore": "Natija: {score}/{total}",
+  "@quizScore": {"placeholders": {"score": {"type": "int"}, "total": {"type": "int"}}},
+
+  "vocabularyCategoriesTitle": "Kategoriyalar",
+  "categoryAnimals": "Hayvonlar",
+  "categoryColors": "Ranglar",
+  "categoryNumbers": "Sonlar",
+  "categoryFamily": "Oila",
+  "categoryFood": "Ovqatlar",
+  "categoryClothes": "Kiyimlar",
+  "categoryTransport": "Transport",
+  "categoryNature": "Tabiat",
+
+  "flashcardListen": "Tinglash",
+  "flashcardNext": "Keyingisi",
+  "flashcardWritePractice": "Yozib ko'rish",
+
+  "vocabQuizChooseWord": "To'g'ri so'zni tanlang",
+  "vocabQuizChooseImage": "To'g'ri rasmni tanlang",
+
+  "settingsTitle": "Sozlamalar",
+  "settingsInterfaceLanguage": "Interfeys tili",
+  "settingsSoundEnabled": "Ovoz",
+  "settingsVoiceSpeed": "Ovoz tezligi",
+  "settingsNotificationTime": "Eslatma vaqti",
+  "settingsParentZone": "Ota-ona zonasi",
+
+  "parentZoneEnterPin": "PIN kodni kiriting",
+  "parentZoneWrongPin": "PIN noto'g'ri",
+  "parentZoneSetPin": "PIN kod o'rnatish",
+  "parentZoneProgressTitle": "Farzandingiz progressi",
+  "parentZoneStatsAlphabet": "Alifbo: {learned}/{total} harf",
+  "@parentZoneStatsAlphabet": {"placeholders": {"learned": {"type": "int"}, "total": {"type": "int"}}},
+  "parentZoneStatsVocabulary": "Lug'at: {learned}/{total} so'z",
+  "@parentZoneStatsVocabulary": {"placeholders": {"learned": {"type": "int"}, "total": {"type": "int"}}},
+
+  "notificationReminderTitle": "Vaqt keldi!",
+  "notificationReminderBody": "Bugun hali mashq qilmadingiz!",
+
+  "commonBack": "Orqaga",
+  "commonNext": "Keyingi",
+  "commonClose": "Yopish",
+  "commonYes": "Ha",
+  "commonNo": "Yo'q",
+  "commonStart": "Boshlash",
+  "commonRetry": "Qayta urinish",
+  "commonCongrats": "Tabriklaymiz!",
+
+  "natureCategoryTitle": "Tabiatni tanlang",
+  "natureAnimals": "Hayvonlar",
+  "naturePlants": "O'simliklar",
+  "natureBirds": "Qushlar",
+  "natureVehicles": "Transport",
+  "natureProfessions": "Kasblar",
+
+  "noInternetTitle": "Internet aloqasi yo'q",
+  "noInternetBody": "Ilova ishlashi uchun internetga ulaning. Aloqa tiklansa, sahifa avtomatik davom etadi.",
+  "noInternetChecking": "Tekshirilmoqda...",
+
+  "unlockWithAdTitle": "Bu bo'lim qulflangan",
+  "unlockWithAdBody": "Reklama ko'rib, ushbu bo'limni butunlay oching",
+  "unlockWithAdButton": "Reklama ko'rish",
+  "unlockWithAdNotReady": "Reklama hali tayyor emas, birozdan keyin urinib ko'ring",
+  "categoryUnlocked": "Bo'lim ochildi!"
+}
