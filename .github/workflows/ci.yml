@@ -55,10 +55,22 @@ jobs:
           set +e
           echo "=== BUILD ===" >> ci_report.txt
           flutter build apk --debug > build.log 2>&1; code=$?
+          if [ $code -ne 0 ]; then
+            echo "1-urinish muvaffaqiyatsiz, qayta urinilmoqda..." >> ci_report.txt
+            sleep 20
+            flutter build apk --debug > build.log 2>&1; code=$?
+          fi
           echo "build exit: $code" >> ci_report.txt
           grep -E "error|Error|ERROR|FAILURE|What went wrong" -A3 build.log | head -150 >> ci_report.txt || true
           tail -40 build.log >> ci_report.txt
           ls -la build/app/outputs/flutter-apk/ >> ci_report.txt 2>&1 || true
+
+      - name: Build web preview
+        run: |
+          set +e
+          echo "=== WEB ===" >> ci_report.txt
+          flutter build web --release --no-tree-shake-icons > web.log 2>&1; echo "web exit: $?" >> ci_report.txt
+          tail -30 web.log >> ci_report.txt
 
       - name: Upload APK
         if: always()
@@ -72,6 +84,7 @@ jobs:
         if: always()
         run: |
           cp ci_report.txt /tmp/report.txt
+          rm -rf /tmp/web && cp -r build/web /tmp/web 2>/dev/null || true
           git config user.name "alifbo-ci"
           git config user.email "ci@users.noreply.github.com"
           git checkout --orphan ci-report-tmp
@@ -80,3 +93,11 @@ jobs:
           git add report.txt
           git commit -q -m "CI report ${GITHUB_SHA}"
           git push -f origin HEAD:ci-report
+          if [ -d /tmp/web ]; then
+            git checkout -q --orphan web-preview-tmp
+            git rm -rf . -q || true
+            cp -r /tmp/web/. .
+            git add -A
+            git commit -q -m "Web preview ${GITHUB_SHA}"
+            git push -f origin HEAD:web-preview
+          fi
