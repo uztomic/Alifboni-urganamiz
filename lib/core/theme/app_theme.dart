@@ -1,89 +1,112 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'app_colors.dart';
+import 'package:flutter/services.dart';
 
-/// TZ 7.3: a rounded, easy-to-read font family for kids. Baloo 2 for big
-/// display text (letters, headings), Nunito for body copy. Fetched via
-/// google_fonts on first use and cached on-device afterwards; if the
-/// device is offline on first launch, Flutter silently falls back to the
-/// system font until a connection is available (see TZ addendum).
+/// Ranglar tizimi: iliq qaymoqrang fon, to'q siyohrang matn va har bir
+/// bo'lim uchun bitta yorqin urg'u rangi. Bolalar uchun yetarlicha
+/// kontrastli (matn/fon ≥ 4.5:1).
+abstract final class AppColors {
+  static const background = Color(0xFFFFF6E9);
+  static const surface = Colors.white;
+  static const ink = Color(0xFF2B2350);
+  static const inkSoft = Color(0xFF6B6491);
+  static const line = Color(0xFFEDE3D3);
+
+  static const teal = Color(0xFF0E8C86); // Alifbo (Ziyrak "Harflar" rangi)
+  static const coral = Color(0xFFFF6B5B); // Darslar
+  static const sun = Color(0xFFFFB627); // Yulduzlar, mukofot
+  static const grape = Color(0xFF7C5CFF); // O'yinlar
+  static const leaf = Color(0xFF3DBE6B); // To'g'ri javob, So'zlar
+  static const sky = Color(0xFF2EA8FF); // Bilimdon
+  static const berry = Color(0xFFE84A8A); // Ertaklar
+  static const night = Color(0xFF26235C);
+
+  static const correct = Color(0xFF2FB56A);
+  static const wrong = Color(0xFFFF5C5C);
+
+  /// Rangning yorqin (yuqori) va to'q (pastki) tusli gradienti.
+  static LinearGradient gradient(Color c) => LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color.lerp(c, Colors.white, 0.18)!, c],
+      );
+
+  /// Tugma pastidagi "qalinlik" (3D) uchun to'qroq tus.
+  static Color shade(Color c, [double amount = 0.22]) =>
+      Color.lerp(c, Colors.black, amount)!;
+
+  static Color tint(Color c, [double amount = 0.85]) =>
+      Color.lerp(c, Colors.white, amount)!;
+}
+
+abstract final class AppFonts {
+  static const ui = 'Nunito';
+
+  /// Harflar uchun — savod o'rgatishga mo'ljallangan Andika shrifti.
+  static const letters = 'Andika';
+}
+
 class AppTheme {
-  AppTheme._();
-
-  static TextStyle display({
-    double fontSize = 24,
-    FontWeight fontWeight = FontWeight.w800,
-    Color color = AppColors.textDark,
-  }) =>
-      GoogleFonts.baloo2(fontSize: fontSize, fontWeight: fontWeight, color: color);
-
   static ThemeData light() {
     final base = ThemeData(
       useMaterial3: true,
+      fontFamily: AppFonts.ui,
       colorScheme: ColorScheme.fromSeed(
-        seedColor: AppColors.primary,
-        primary: AppColors.primary,
-        secondary: AppColors.secondary,
+        seedColor: AppColors.teal,
         surface: AppColors.surface,
         brightness: Brightness.light,
       ),
       scaffoldBackgroundColor: AppColors.background,
     );
-
-    final bodyTextTheme = GoogleFonts.nunitoTextTheme(base.textTheme).apply(
-      bodyColor: AppColors.textDark,
-      displayColor: AppColors.textDark,
+    final text = base.textTheme.apply(
+      bodyColor: AppColors.ink,
+      displayColor: AppColors.ink,
+      fontFamily: AppFonts.ui,
     );
-
-    final textTheme = bodyTextTheme.copyWith(
-      headlineLarge: GoogleFonts.baloo2(fontSize: 30, fontWeight: FontWeight.w800, color: AppColors.textDark),
-      headlineMedium: GoogleFonts.baloo2(fontSize: 26, fontWeight: FontWeight.w800, color: AppColors.textDark),
-      headlineSmall: GoogleFonts.baloo2(fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.textDark),
-      titleLarge: GoogleFonts.baloo2(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.textDark),
-      titleMedium: GoogleFonts.baloo2(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textDark),
-    );
-
     return base.copyWith(
-      textTheme: textTheme,
-      appBarTheme: AppBarTheme(
+      textTheme: text.copyWith(
+        headlineMedium: text.headlineMedium?.copyWith(fontWeight: FontWeight.w900),
+        titleLarge: text.titleLarge?.copyWith(fontWeight: FontWeight.w900),
+        titleMedium: text.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+        bodyLarge: text.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+        bodyMedium: text.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+      ),
+      appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        foregroundColor: AppColors.textDark,
+        scrolledUnderElevation: 0,
         centerTitle: true,
-        titleTextStyle: GoogleFonts.baloo2(
-          fontSize: 20,
+        foregroundColor: AppColors.ink,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        titleTextStyle: TextStyle(
+          fontFamily: AppFonts.ui,
+          fontSize: 22,
+          fontWeight: FontWeight.w900,
+          color: AppColors.ink,
+        ),
+      ),
+      splashFactory: InkSparkle.splashFactory,
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? Colors.white : null,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (s) => s.contains(WidgetState.selected) ? AppColors.leaf : null,
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: AppColors.surface,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: AppColors.ink,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        contentTextStyle: const TextStyle(
+          fontFamily: AppFonts.ui,
           fontWeight: FontWeight.w700,
-          color: AppColors.textDark,
+          color: Colors.white,
         ),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size(64, 64),
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.textLight,
-          textStyle: GoogleFonts.baloo2(fontSize: 18, fontWeight: FontWeight.w700),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        ),
-      ),
-      cardTheme: CardThemeData(
-        color: AppColors.surface,
-        elevation: 4,
-        shadowColor: Colors.black26,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
-        ),
-      ),
-      chipTheme: base.chipTheme.copyWith(
-        labelStyle: GoogleFonts.nunito(fontWeight: FontWeight.w700),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide.none,
-        ),
-      ),
-      splashFactory: InkRipple.splashFactory,
     );
   }
 }

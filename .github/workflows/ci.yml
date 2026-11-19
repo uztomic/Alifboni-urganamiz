@@ -1,0 +1,78 @@
+name: CI
+
+# Har push'da: kod tahlili (flutter analyze) va debug APK yig'ish.
+# Natija "ci-report" branch'iga report.txt bo'lib yoziladi, APK esa
+# Actions sahifasida "artifact" sifatida yuklab olinadi.
+on:
+  push:
+    branches: [v2-qayta-qurish, main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Pub get
+        run: |
+          { echo "commit: ${GITHUB_SHA}"; flutter --version; echo "=== PUB GET ==="; } > ci_report.txt 2>&1
+          flutter pub get >> ci_report.txt 2>&1; echo "pub get exit: $?" >> ci_report.txt
+
+      - name: Analyze
+        run: |
+          echo "=== ANALYZE ===" >> ci_report.txt
+          flutter analyze --no-fatal-infos --no-fatal-warnings >> ci_report.txt 2>&1; echo "analyze exit: $?" >> ci_report.txt
+
+      - name: Test
+        run: |
+          echo "=== TEST ===" >> ci_report.txt
+          if [ -d test ]; then flutter test >> ci_report.txt 2>&1; echo "test exit: $?" >> ci_report.txt; else echo "no tests" >> ci_report.txt; fi
+
+      - name: Build APK
+        run: |
+          echo "=== BUILD ===" >> ci_report.txt
+          flutter build apk --debug > build.log 2>&1; code=$?
+          echo "build exit: $code" >> ci_report.txt
+          grep -E "error|Error|ERROR|FAILURE|What went wrong" -A3 build.log | head -150 >> ci_report.txt || true
+          tail -40 build.log >> ci_report.txt
+          ls -la build/app/outputs/flutter-apk/ >> ci_report.txt 2>&1 || true
+
+      - name: Upload APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: alifbo-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: ignore
+
+      - name: Publish report
+        if: always()
+        run: |
+          cp ci_report.txt /tmp/report.txt
+          git config user.name "alifbo-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git checkout --orphan ci-report-tmp
+          git rm -rf . -q || true
+          cp /tmp/report.txt report.txt
+          git add report.txt
+          git commit -q -m "CI report ${GITHUB_SHA}"
+          git push -f origin HEAD:ci-report

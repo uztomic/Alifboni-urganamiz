@@ -1,134 +1,88 @@
 name: alifbo
-description: "Alifboni o'rganish — 10 tilda alifbo, lug'at va tabiat o'rganish ilovasi."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+description: "Alifboni o'rganamiz — o'zbek (lotin, yangi lotin, kirill), rus va ingliz alifbolarini tabiiy ovoz bilan o'rgatuvchi bolalar ilovasi."
+publish_to: 'none'
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+# 2.0.0 — to'liq qayta qurilgan versiya. Build raqami Play Console'dagi
+# oxirgi versionCode'dan katta bo'lishi shart.
+version: 2.0.0+20
 
 environment:
   sdk: ^3.12.2
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
-
-  # State management
+  # Holat boshqaruvi
   flutter_bloc: ^9.1.0
   equatable: ^2.0.5
 
-  # Local storage
+  # Mahalliy saqlash (sozlamalar va natijalar)
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  # Audio (on-device text-to-speech, no bundled audio assets needed)
+  # Ovoz: ilova ichidagi tabiiy ovoz yozuvlari (webm/opus, mp3)
+  just_audio: ^0.10.4
+  # Zaxira: rus va ingliz tillari uchun telefonning TTS'i
   flutter_tts: ^4.2.0
 
-  # Ads
+  # Ziko maskoti (SVG)
+  flutter_svg: ^2.2.0
+
+  # Reklama (faqat banner + kamdan-kam interstitial)
   google_mobile_ads: ^9.0.0
 
-  # Notifications
-  flutter_local_notifications: ^18.0.1
-  timezone: ^0.9.4
+  # Play Market'da baho/izoh so'rash (ota-ona tekshiruvidan keyin)
+  in_app_review: ^2.0.10
 
-  # Localization
   intl: ^0.20.2
-
-  # PIN hashing for the parent zone
-  crypto: ^3.0.5
-
-  # Kid-friendly rounded fonts (TZ 7.3: Baloo 2 for display, Nunito for body)
-  google_fonts: ^6.2.1
-
-  # Nature module: real photos fetched from Wikipedia, cached for offline reuse
-  cached_network_image: ^3.4.1
-  http: ^1.2.2
-
-  # Internet connectivity gate
-  connectivity_plus: ^6.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^6.0.0
-
-  # Generates all Android launcher icon sizes from a single source image.
   flutter_launcher_icons: ^0.14.3
 
 flutter_launcher_icons:
   android: true
   image_path: "assets/logo/logo.png"
   min_sdk_android: 21
-  adaptive_icon_background: "#FFF8EC"
+  adaptive_icon_background: "#FFF6E9"
   adaptive_icon_foreground: "assets/logo/logo.png"
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter packages.
 flutter:
-  generate: true
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
   assets:
     - assets/logo/
+    - assets/images/ziko/
+    - assets/images/icons/
+    - assets/pictures/
+    - assets/voice/uz/
+    - assets/voice/en/
+    - assets/voice/ru/
+    - assets/audio/sfx/
+    - assets/audio/music/
+    - assets/tales/
 
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/to/asset-from-package
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/to/font-from-package
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Nunito-Black.ttf
+          weight: 900
+    # Andika — savod o'rgatish uchun maxsus ishlangan shrift: "a", "g", "I/l"
+    # harflari bolalar daftardagidek ko'rinadi. Harflar shu shriftda chiziladi.
+    - family: Andika
+      fonts:
+        - asset: assets/fonts/Andika-Regular.ttf
+        - asset: assets/fonts/Andika-Bold.ttf
+          weight: 700
