@@ -51,7 +51,6 @@ class _BalloonGameState extends State<BalloonGame> with SingleTickerProviderStat
   late List<Letter> _targets;
   int _round = 0;
   int _hits = 0;
-  int _misses = 0;
   int _totalMisses = 0;
   int _confetti = 0;
   bool _between = false;
@@ -131,7 +130,6 @@ class _BalloonGameState extends State<BalloonGame> with SingleTickerProviderStat
       if (_hits >= _perRound) _nextRound();
     } else {
       b.shake++;
-      _misses++;
       _totalMisses++;
       AudioService.instance.play(Sfx.wrong);
       AudioService.instance.say(b.letter.say, lang: b.letter.sayLang);
@@ -166,7 +164,6 @@ class _BalloonGameState extends State<BalloonGame> with SingleTickerProviderStat
     setState(() {
       _round++;
       _hits = 0;
-      _misses = 0;
       _between = false;
     });
     _announce();

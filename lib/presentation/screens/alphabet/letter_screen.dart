@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../app.dart';
 import '../../../core/audio/audio_service.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/voice_lines.dart';
 import '../../widgets/basics.dart';
 import '../../../domain/entities/alphabet.dart';
 import '../../../domain/services/text_units.dart';

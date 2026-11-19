@@ -156,7 +156,7 @@ class ChoiceView extends StatelessWidget {
                   shake: wrongPicks.contains(i) ? shakeCount : 0,
                   color: color,
                   onTap: () => onPick(i),
-                  width: math.min(width - 32, 420),
+                  width: math.min(width - 32, 420.0),
                   height: 78,
                   child: Row(
                     children: [

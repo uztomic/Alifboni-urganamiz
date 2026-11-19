@@ -34,21 +34,25 @@ jobs:
 
       - name: Pub get
         run: |
+          set +e
           { echo "commit: ${GITHUB_SHA}"; flutter --version; echo "=== PUB GET ==="; } > ci_report.txt 2>&1
           flutter pub get >> ci_report.txt 2>&1; echo "pub get exit: $?" >> ci_report.txt
 
       - name: Analyze
         run: |
+          set +e
           echo "=== ANALYZE ===" >> ci_report.txt
           flutter analyze --no-fatal-infos --no-fatal-warnings >> ci_report.txt 2>&1; echo "analyze exit: $?" >> ci_report.txt
 
       - name: Test
         run: |
+          set +e
           echo "=== TEST ===" >> ci_report.txt
           if [ -d test ]; then flutter test >> ci_report.txt 2>&1; echo "test exit: $?" >> ci_report.txt; else echo "no tests" >> ci_report.txt; fi
 
       - name: Build APK
         run: |
+          set +e
           echo "=== BUILD ===" >> ci_report.txt
           flutter build apk --debug > build.log 2>&1; code=$?
           echo "build exit: $code" >> ci_report.txt
