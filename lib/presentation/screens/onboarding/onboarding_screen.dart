@@ -174,6 +174,7 @@ class _NameStep extends StatelessWidget {
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
           decoration: InputDecoration(
             hintText: s.t('childNameHint'),
+            hintStyle: const TextStyle(color: Color(0xFFB5AEC9), fontWeight: FontWeight.w700),
             counterText: '',
             filled: true,
             fillColor: Colors.white,

@@ -144,7 +144,7 @@ class TracePadState extends State<TracePad> {
   }
 
   void _onStart(DragStartDetails d) {
-    if (_done || _mask == null) return;
+    if (_done) return;
     setState(() {
       _strokes.add([d.localPosition]);
       _record(d.localPosition);
@@ -152,7 +152,7 @@ class TracePadState extends State<TracePad> {
   }
 
   void _onUpdate(DragUpdateDetails d) {
-    if (_done || _mask == null || _strokes.isEmpty) return;
+    if (_done || _strokes.isEmpty) return;
     final last = _strokes.last.last;
     final next = d.localPosition;
     final steps = max(1, ((next - last).distance / 3).round());
@@ -162,10 +162,27 @@ class TracePadState extends State<TracePad> {
     setState(() => _strokes.last.add(next));
   }
 
+  /// Chizilgan izning umumiy uzunligi (px).
+  double get _inkLength {
+    var total = 0.0;
+    for (final s in _strokes) {
+      for (var i = 1; i < s.length; i++) {
+        total += (s[i] - s[i - 1]).distance;
+      }
+    }
+    return total;
+  }
+
   void _onEnd(DragEndDetails _) {
-    if (_done || _glyphCells == 0) return;
+    if (_done) return;
     final accuracy = _samples == 0 ? 0.0 : _onGlyph / _samples;
-    if (coverage >= _needCoverage && accuracy >= _needAccuracy) {
+    // Zaxira: andoza (maska) biror sabab bilan qurilmagan bo'lsa, bola
+    // qotib qolmasin — yetarlicha uzun iz chizilsa qabul qilamiz.
+    final maskMissing = _glyphCells == 0;
+    final passed = maskMissing
+        ? _inkLength > widget.size * 1.6
+        : coverage >= _needCoverage && accuracy >= _needAccuracy;
+    if (passed) {
       setState(() => _done = true);
       HapticFeedback.mediumImpact();
       AudioService.instance.play(Sfx.correct);

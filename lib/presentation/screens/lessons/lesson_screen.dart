@@ -202,7 +202,14 @@ class _LessonViewState extends State<_LessonView> {
                 child: Stack(
                   children: [
                     if (st.phase == LessonPhase.intro)
-                      _IntroPanel(title: cfg.title, color: cfg.color, onStart: _start, onClose: () => Navigator.of(context).pop())
+                      _IntroPanel(
+                        title: cfg.title,
+                        color: cfg.color,
+                        note: s.isUzbek ? cfg.intro.map((l) => s.uzText(l.$1)).join(' ') : '',
+                        onStart: _start,
+                        onReplay: () => AudioService.instance.sayAll(cfg.intro),
+                        onClose: () => Navigator.of(context).pop(),
+                      )
                     else if (st.questions.isEmpty)
                       Center(child: Text(s.t('done')))
                     else
@@ -257,10 +264,17 @@ class _LessonViewState extends State<_LessonView> {
 }
 
 class _IntroPanel extends StatelessWidget {
-  const _IntroPanel({required this.title, required this.color, required this.onStart, required this.onClose});
-  final String title;
+  const _IntroPanel({
+    required this.title,
+    required this.color,
+    required this.note,
+    required this.onStart,
+    required this.onReplay,
+    required this.onClose,
+  });
+  final String title, note;
   final Color color;
-  final VoidCallback onStart, onClose;
+  final VoidCallback onStart, onReplay, onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -283,6 +297,33 @@ class _IntroPanel extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900, color: AppColors.shade(color, 0.2))),
         ),
+        if (note.isNotEmpty) ...[
+          const SizedBox(height: 14),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Bouncy(
+              onTap: onReplay,
+              sound: null,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(22),
+                  boxShadow: [BoxShadow(color: AppColors.line, offset: const Offset(0, 4))],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(note, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, height: 1.3)),
+                    ),
+                    const SizedBox(width: 8),
+                    Icon(Icons.volume_up_rounded, color: color),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
         const Spacer(),
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),

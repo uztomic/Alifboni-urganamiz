@@ -33,7 +33,7 @@ class S {
     String v;
     switch (lang) {
       case UiLang.uz:
-        v = row[0];
+        v = display(row[0]);
       case UiLang.uzc:
         final c = _cache.putIfAbsent(lang, () => {});
         v = c.putIfAbsent(key, () => latinToCyrillic(row[0]));
@@ -51,7 +51,12 @@ class S {
   /// O'zbekcha matnni (masalan so'z yoki gap) joriy interfeys yozuviga
   /// moslab qaytaradi: kirill interfeysda — kirillda.
   String uzText(String latin) =>
-      lang == UiLang.uzc ? latinToCyrillic(latin) : latin;
+      lang == UiLang.uzc ? latinToCyrillic(latin) : display(latin);
+
+  /// Ekranda ko'rsatish uchun: Nunito shriftida ʻ (U+02BB) belgisi juda
+  /// keng chiziladi ("O ʻzbek"), shuning uchun ingichka ‘ bilan almashtiramiz.
+  /// Ovoz kalitlari o'zgarmaydi — bu faqat ko'rinish.
+  static String display(String latin) => latin.replaceAll('ʻ', '‘');
 
   bool get isUzbek => lang == UiLang.uz || lang == UiLang.uzc;
 }
@@ -81,8 +86,8 @@ const Map<String, List<String>> _strings = {
   'homeQuestion': ["Bugun nimani oʻrganamiz?", 'Что будем учить сегодня?', 'What shall we learn today?'],
   'secAlphabet': ['Alifbo', 'Алфавит', 'Alphabet'],
   'secAlphabetSub': ['Harflar bilan tanish', 'Знакомься с буквами', 'Meet the letters'],
-  'secLessons': ['Harflar vodiysi', 'Долина букв', 'Letter Valley'],
-  'secLessonsSub': ['12 ta dars', '12 уроков', '12 lessons'],
+  'secLessons': ['Darslar', 'Уроки', 'Lessons'],
+  'secLessonsSub': ['Harflar vodiysi', 'Долина букв', 'Letter Valley'],
   'secGames': ["Oʻyinlar", 'Игры', 'Games'],
   'secGamesSub': ["Oʻynab oʻrgan", 'Учись играя', 'Learn by playing'],
   'secWords': ["Soʻzlar", 'Слова', 'Words'],
@@ -106,9 +111,9 @@ const Map<String, List<String>> _strings = {
   'scriptEnShort': ['Inglizcha', 'Английский', 'English'],
   'chooseScript': ['Qaysi alifbo?', 'Какой алфавит?', 'Which alphabet?'],
   'newAlphabetNote': [
-    "2027-yil 22-apreldan kuchga kiradigan yangi alifbo: Oʻ→Ö, Gʻ→Ğ, Sh→Ş, Ch→Ç.",
-    'Новый узбекский алфавит с 22 апреля 2027: Oʻ→Ö, Gʻ→Ğ, Sh→Ş, Ch→Ç.',
-    'New Uzbek alphabet from 22 April 2027: Oʻ→Ö, Gʻ→Ğ, Sh→Ş, Ch→Ç.'
+    "2027-yil 22-apreldan rasmiy alifbo: Ö (Oʻ), Ğ (Gʻ), Ş (Sh), Ç (Ch).",
+    'Официальный алфавит с 22.04.2027: Ö (Oʻ), Ğ (Gʻ), Ş (Sh), Ç (Ch).',
+    'Official from 22 April 2027: Ö (Oʻ), Ğ (Gʻ), Ş (Sh), Ç (Ch).'
   ],
   'lettersCount': ['%1 ta harf', '%1 букв', '%1 letters'],
   'learnedOf': ["%1 / %2 oʻrganildi", 'Изучено %1 из %2', '%1 of %2 learned'],
