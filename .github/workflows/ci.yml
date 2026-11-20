@@ -54,11 +54,11 @@ jobs:
         run: |
           set +e
           echo "=== BUILD ===" >> ci_report.txt
-          flutter build apk --debug > build.log 2>&1; code=$?
+          flutter build apk --debug --android-skip-build-dependency-validation > build.log 2>&1; code=$?
           if [ $code -ne 0 ]; then
             echo "1-urinish muvaffaqiyatsiz, qayta urinilmoqda..." >> ci_report.txt
             sleep 20
-            flutter build apk --debug > build.log 2>&1; code=$?
+            flutter build apk --debug --android-skip-build-dependency-validation > build.log 2>&1; code=$?
           fi
           echo "build exit: $code" >> ci_report.txt
           grep -E "error|Error|ERROR|FAILURE|What went wrong" -A3 build.log | head -150 >> ci_report.txt || true
