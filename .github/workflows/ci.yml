@@ -65,6 +65,17 @@ jobs:
           tail -40 build.log >> ci_report.txt
           ls -la build/app/outputs/flutter-apk/ >> ci_report.txt 2>&1 || true
 
+      - name: Build release APK (telefonda sinash uchun)
+        run: |
+          set +e
+          echo "=== RELEASE APK ===" >> ci_report.txt
+          flutter build apk --release --split-per-abi --android-skip-build-dependency-validation > rel.log 2>&1
+          echo "release exit: $?" >> ci_report.txt
+          ls -la build/app/outputs/flutter-apk/ >> ci_report.txt 2>&1
+          mkdir -p /tmp/apk
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk /tmp/apk/Alifbo-2.0-arm64.apk 2>/dev/null
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk /tmp/apk/Alifbo-2.0-armv7.apk 2>/dev/null
+
       - name: Build web preview
         run: |
           set +e
@@ -93,6 +104,15 @@ jobs:
           git add report.txt
           git commit -q -m "CI report ${GITHUB_SHA}"
           git push -f origin HEAD:ci-report
+          if ls /tmp/apk/*.apk >/dev/null 2>&1; then
+            git checkout -q --orphan apk-tmp
+            git rm -rf . -q || true
+            git clean -fdq
+            cp /tmp/apk/*.apk .
+            git add *.apk
+            git commit -q -m "APK ${GITHUB_SHA}"
+            git push -f origin HEAD:apk
+          fi
           if [ -d /tmp/web ]; then
             git checkout -q --orphan web-preview-tmp
             git rm -rf . -q || true
