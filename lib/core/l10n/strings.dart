@@ -38,9 +38,9 @@ class S {
         final c = _cache.putIfAbsent(lang, () => {});
         v = c.putIfAbsent(key, () => latinToCyrillic(row[0]));
       case UiLang.ru:
-        v = row[1];
+        v = display(row[1]);
       case UiLang.en:
-        v = row[2];
+        v = display(row[2]);
     }
     for (var i = 0; i < args.length; i++) {
       v = v.replaceAll('%${i + 1}', '${args[i]}');
