@@ -7,7 +7,6 @@ import 'package:alifbo/data/content/alphabets.dart';
 import 'package:alifbo/data/content/emoji_index.dart';
 import 'package:alifbo/data/content/lessons.dart';
 import 'package:alifbo/data/content/quizzes.dart';
-import 'package:alifbo/domain/entities/alphabet.dart';
 import 'package:alifbo/domain/services/lesson_engine.dart';
 import 'package:alifbo/domain/services/quiz_builder.dart';
 import 'package:alifbo/domain/services/text_units.dart';
