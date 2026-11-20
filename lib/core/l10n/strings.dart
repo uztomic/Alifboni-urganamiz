@@ -4,7 +4,7 @@ import '../utils/translit.dart';
 
 /// Interfeys tillari.
 enum UiLang {
-  uz('uz', "Oʻzbekcha", Locale('uz')),
+  uz('uz', 'O‘zbekcha', Locale('uz')),
   uzc('uzc', 'Ўзбекча', Locale('uz')),
   ru('ru', 'Русский', Locale('ru')),
   en('en', 'English', Locale('en'));
